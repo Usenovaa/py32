@@ -137,8 +137,54 @@
 #     file.write('\nhello')
     
 
-with open('test2.txt', 'a+') as file:
-    file.write('\nhello')
-    file.seek(0)
-    print(file.read())
+# with open('test2.txt', 'a+') as file:
+#     file.write('\nhello')
+#     file.seek(0)
+#     print(file.read())
 
+
+
+
+db = [
+    {'name': 'hello', 'password': '12345678'},
+    {'name': 'test123', 'password': 'helloworld'},
+    
+]
+
+def in_database(name):
+    for user in db:
+        # print(user)
+        if user['name'] == name:
+            return True
+        return False
+    
+
+def validate_password(password):
+    if len(password) < 8:
+        raise Exception('Слишком короткий пароль')
+    return True
+
+
+def register(name, password):
+    if in_database(name):
+        raise Exception('Юзер с таким именем уже существует')
+    if validate_password(password):
+        user = {'name': name, 'password': password}
+        db.append(user)
+        return 'Вы успешно зарегистрировались'
+    
+# CRUD -> create, read, update, delete
+
+# print(register('hello1', '12345678'))
+# print(db)
+
+def login(name, password):
+    for user in db:
+        if user['name'] == name:
+            if user['password'] == password:
+                return 'Вы успешно залогинились'
+    else:
+        raise Exception('Не верные данные')
+
+
+# print(login('test123', 'helloworld'))
